@@ -12,9 +12,13 @@ export default function Login() {
         try{
             const {data} = await api.post<LoginResponse>('/auth/login', {username, password});
             localStorage.setItem('token', data.token);
+            if(data.refreshToken){
+                localStorage.setItem("refresh_token", data.refreshToken);
+            }
             navigate('/products');
         } catch (err) {
-            console.error('Login Fail', err)
+            console.error('Login Fail', err);
+            alert("login fail");
         }
     };
 

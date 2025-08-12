@@ -1,17 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Login from './pages/Login'
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import ProductList from "./pages/productList";
+import type { ReactElement } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const PrivateRoute = ({ children }: { children: ReactElement }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" replace />;
+};
 
+export default function App() {
   return (
-    <div>
-      <Login />
-    </div>
-  )
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/products"
+        element={
+          <PrivateRoute>
+            <ProductList />
+          </PrivateRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/products" replace />} />
+    </Routes>
+  );
 }
-
-export default App

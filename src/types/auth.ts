@@ -1,12 +1,13 @@
 export interface User {
     id: number;
     username: string;
-    email: string;
+    email?: string;
 }
 
 export interface LoginResponse {
     token: string;
-    user: User;
+    refreshToken: string;
+    user?: User;
 }
 
 
