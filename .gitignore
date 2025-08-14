@@ -7,18 +7,35 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Node
+node_modules/
 
-# Editor directories and files
+# Vite / Build
+dist/
+dist-ssr/
+.vite/
+.cache/
+*.tsbuildinfo
+
+# dotenv（環境機密）
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Tailwind（若使用 safelist plugin 會產生 cache）
+.tailwind/
+
+# Editor
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Coverage / test
+coverage/

@@ -6,7 +6,7 @@ export interface User {
 
 export interface LoginResponse {
     token: string;
-    refreshToken: string;
+    refreshToken?: string;
     user?: User;
 }
 

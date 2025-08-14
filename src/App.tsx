@@ -20,7 +20,7 @@ export default function App() {
           </PrivateRoute>
         }
       />
-      <Route path="*" element={<Navigate to="/products" replace />} />
+      <Route path="*" element={<Navigate to="/products" />} />
     </Routes>
   );
 }
