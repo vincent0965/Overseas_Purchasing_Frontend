@@ -1,26 +1,37 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-import ProductList from "./pages/productList";
+import ProductList from "./pages/ProductList";
+import Profile from "./pages/Profile";
+import PrivateRoute from "./routers/PrivateRoute";
+import Header from "./components/Header";
 import type { ReactElement } from "react";
 
-const PrivateRoute = ({ children }: { children: ReactElement }) => {
-  const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" replace />;
-};
-
-export default function App() {
+function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/products"
-        element={
-          <PrivateRoute>
-            <ProductList />
-          </PrivateRoute>
-        }
-      />
-      <Route path="*" element={<Navigate to="/products" />} />
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute>
+              <ProductList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/products" />} />
+      </Routes>
+    </>
   );
 }
+
+export default App;

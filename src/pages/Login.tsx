@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, serError] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async() => {
@@ -16,12 +17,13 @@ export default function Login() {
                 password
             });
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('username', res.data.user?.username ?? "");
             if(res.data.refreshToken){
                 localStorage.setItem("refresh_token", res.data.refreshToken);
             }
             navigate('/products');
         } catch (err) {
-            alert("login fail");
+            alert("Login Fail");
         }
     };
 
@@ -43,7 +45,7 @@ export default function Login() {
             />
             <button
                 onClick={handleLogin}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-blue-500 text-white px-4 py-2 rounded"
             >
             登入
             </button>
