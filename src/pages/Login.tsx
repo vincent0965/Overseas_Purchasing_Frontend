@@ -2,53 +2,62 @@ import { useState } from "react";
 import api from "../api/axios";
 import type { LoginResponse } from "../types/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
-    const [username, setUsername] = useState('');
+    const [account, setAccount] = useState('');
     const [password, setPassword] = useState('');
-    const [error, serError] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async() => {
         try{
             // 設定登入的api位址
             const res = await api.post<LoginResponse>('/users/login', {
-                username,
+                account,
                 password
             });
             localStorage.setItem('token', res.data.token);
-            localStorage.setItem('username', res.data.user?.username ?? "");
+            localStorage.setItem('account', res.data.account);
+            localStorage.setItem('email', res.data.email);
             if(res.data.refreshToken){
                 localStorage.setItem("refresh_token", res.data.refreshToken);
+                toast.success("登入成功");
             }
-            navigate('/products');
+            // navigate('/products');
+            navigate('/profile');
         } catch (err) {
-            alert("Login Fail");
+            toast.error("帳號/密碼錯誤，請重新確認。");
         }
     };
 
     return (
-        <div className="flex flex-col items-center mt-20">
-            <h1 className="text-2xl font-bold mb-4">登入</h1>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+            <h2 className="text-2xl font-bold mb-6 text-center">登入</h2>
+            <div className="mb-4">
+            <label className="block mb-1">帳號</label>
             <input
-                className="border p-2 mb-2 w-64"
-                placeholder="帳號"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={account}
+                onChange={(e) => setAccount(e.target.value)}
             />
+            </div>
+            <div className="mb-6">
+            <label className="block mb-1">密碼</label>
             <input
                 type="password"
-                className="border p-2 mb-4 w-64"
-                placeholder="密碼"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
+            </div>
             <button
-                onClick={handleLogin}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+            onClick={handleLogin}
             >
             登入
             </button>
+        </div>
         </div>
     );
 }

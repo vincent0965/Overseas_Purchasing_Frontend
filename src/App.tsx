@@ -1,25 +1,19 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import ProductList from "./pages/ProductList";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./routers/PrivateRoute";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
 import Header from "./components/Header";
-import type { ReactElement } from "react";
 
 function App() {
   return (
-    <>
-      <Header />
+      <>
+    <Header />
       <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/products"
-          element={
-            <PrivateRoute>
-              <ProductList />
-            </PrivateRoute>
-          }
-        />
         <Route
           path="/profile"
           element={
@@ -28,7 +22,6 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<Navigate to="/products" />} />
       </Routes>
     </>
   );

@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
     const token = localStorage.getItem("token")
-    return token ? children : <Navigate to="/login" replace />
+    return token ? children : <Navigate to="/login" />
 }
 
 export default PrivateRoute
