@@ -5,25 +5,27 @@ import PrivateRoute from "./routers/PrivateRoute";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import FeaturedProduct from "./components/FeaturedProduct";
+import PopularProducts from "./components/PopularProducts";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-      <>
-    <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </>
+    <div className="font-sans">
+      {/* Sticky Header */}
+      <Header />
+
+      {/* 主畫面內容：加 padding-top 避免被 Header 遮住 */}
+      <main className="pt-36">
+        <HeroSection />
+        <FeaturedProduct />
+        <PopularProducts />
+      </main>
+
+      {/* 頁尾 */}
+      <Footer />
+    </div>
   );
 }
 
