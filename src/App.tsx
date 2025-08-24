@@ -2,30 +2,43 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./routers/PrivateRoute";
+import EditProfile from "./pages/Edit_Profile";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
-import FeaturedProduct from "./components/FeaturedProduct";
-import PopularProducts from "./components/PopularProducts";
 import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="font-sans">
-      {/* Sticky Header */}
-      <Header />
+      <div className="font-sans">
+        <Header />
 
-      {/* 主畫面內容：加 padding-top 避免被 Header 遮住 */}
-      <main className="pt-36">
-        <HeroSection />
-        <FeaturedProduct />
-        <PopularProducts />
-      </main>
+        <main className="pt-32">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/edit-profile"
+              element={
+                <PrivateRoute>
+                  <EditProfile />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </main>
 
-      {/* 頁尾 */}
-      <Footer />
-    </div>
+        <Footer />
+      </div>
   );
 }
 

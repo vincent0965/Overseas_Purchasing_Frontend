@@ -37,7 +37,7 @@ export default function Footer() {
         </div>
       </div>
       <p className="text-center mt-10 text-xs text-gray-400">
-        © 2035 by Frais. Powered and secured by Wix
+        © 2025 by Vincent Corp.
       </p>
     </footer>
   );

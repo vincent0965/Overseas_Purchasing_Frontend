@@ -24,7 +24,7 @@ export default function Login() {
                 toast.success("登入成功");
             }
             // navigate('/products');
-            navigate('/profile');
+            navigate('/profile'); //測試用 跳轉到profile
         } catch (err) {
             toast.error("帳號/密碼錯誤，請重新確認。");
         }

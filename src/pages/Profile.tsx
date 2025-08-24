@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getUserProfile, updateUserProfile } from "../api/userapi";
 import type { UserProfile } from "../types/user";
 import { toast } from "react-toastify";
 
 export default function Profile() {
+    const navigate = useNavigate();
     const [profile, setProfile] = useState<UserProfile>({
         id: 0,
         firstname:"",
@@ -22,6 +24,7 @@ export default function Profile() {
                 try{
                     const res = await getUserProfile();
                     setProfile(res.data);
+
                 } catch (e) {
                     toast.error("無法載入使用者資料");
                 } finally {
@@ -30,84 +33,40 @@ export default function Profile() {
             })();
     },[]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setProfile({
-        ...profile,
-        [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSave = async () => {
-        try {
-            await updateUserProfile(profile);
-            toast.success("儲存成功");
-        } catch (e) {
-            toast.error("儲存失敗");
-        }
-    };
-
-    
+    // 之後後端要新增取個人資料的api
+    const test_account = localStorage.getItem('account');
+    const test_email = localStorage.getItem('email');
 
     if (loading) return <p className="text-center mt-10 text-gray-500">載入中...</p>;
 
-    return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-50">
-        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
-            <h2 className="text-2xl font-semibold mb-6 text-center text-blue-600">個人資料</h2>
-            <form className="space-y-5">
-            <div>
-                <label className="block mb-1 text-gray-700">使用者名稱</label>
-                {/* <input
-                className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                name="name"
-                value={profile.account}
-                onChange={handleChange}
-                required
-                /> */}
-            </div>
-            <div>
-                <label className="block mb-1 text-gray-700">電話</label>
-                {/* <input
-                className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                name="phone"
-                value={profile.phone}
-                onChange={handleChange}
-                required
-                /> */}
-            </div>
-            <div>
-                <label className="block mb-1 text-gray-700">信箱</label>
-                {/* <input
-                className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                name="email"
-                value={profile.email}
-                onChange={handleChange}
-                required
-                /> */}
-            </div>
-            <div>
-                <label className="block mb-1 text-gray-700">居住縣市（選填）</label>
-                {/* <input
-                className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                name="city"
-                value={profile.city || ""}
-                onChange={handleChange}
-                /> */}
-            </div>
-            <button
-                type="button"
-                className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-                onClick={handleSave}
-            >
-                儲存
-            </button>
-            </form>
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gray-50">
+      <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
+        <h2 className="text-2xl font-semibold mb-6 text-center text-blue-600">個人資料</h2>
+        <div className="grid grid-cols-2 gap-4 text-gray-700 text-base">
+            <span className="font-medium">帳號</span>
+            {/* <p>{profile.account}</p> */}
+            <p>{test_account}</p>
+
+            <span className="font-medium">電子郵件</span>
+            {/* <p>{profile.email}</p> */}
+            <p>{test_email}</p>
+
+            <span className="font-medium">電話</span>
+            <p>{profile.phone || "未填寫"}</p>
+
+            <span className="font-medium">縣市</span>
+            <p>{profile.city || "未填寫"}</p>
         </div>
-        </div>
-    );
-
-
-
+        <button
+            onClick={() => navigate("/edit-profile", { state: { fromProfile: true } })}
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-6"
+        >
+            編輯個人資料
+        </button> 
+      </div>
+    </div>
+  );
 }
 
 
